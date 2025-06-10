@@ -37,17 +37,55 @@ document.addEventListener('DOMContentLoaded', () => {
   const sections = gsap.utils.toArray('.section');
 
   // animate horizontal scroll
-  gsap.to(sections, {
-    xPercent: -100 * (sections.length - 1),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.horizontal-scroll-wrapper',
-      pin: true,
-      scrub: 1,
-      snap: 1 / (sections.length - 1),
-      end: () => '+=' + document.querySelector('.horizontal-scroll-wrapper').offsetWidth,
-    },
-  });
+// After gsap.registerPlugin(ScrollTrigger);
+// And after you have const sections = gsap.utils.toArray('.section');
+
+ScrollTrigger.matchMedia({
+
+  // Desktop & tablet (≥769px): horizontal scroll enabled
+  "(min-width: 769px)": function() {
+    gsap.to(sections, {
+      xPercent: -100 * (sections.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".horizontal-scroll-wrapper",
+        pin: true,
+        scrub: 1,
+        snap: 1 / (sections.length - 1),
+        end: () => "+=" + document.querySelector(".horizontal-scroll-wrapper").offsetWidth,
+      },
+    });
+
+    // highlight active section
+    sections.forEach((sec) => {
+      ScrollTrigger.create({
+        trigger: sec,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => sec.classList.add("active"),
+        onEnterBack: () => sec.classList.add("active"),
+        onLeave: () => sec.classList.remove("active"),
+        onLeaveBack: () => sec.classList.remove("active"),
+      });
+    });
+  },
+
+  // Mobile (≤768px): disable horizontal pin, allow normal vertical scroll
+  "(max-width: 768px)": function() {
+    // Remove all ScrollTriggers (including pin)
+    ScrollTrigger.getAll().forEach(st => st.kill());
+
+    // Reset any inline styles set by GSAP
+    const wrapper = document.querySelector(".horizontal-scroll-wrapper");
+    if(wrapper){
+      wrapper.style.removeProperty("overflow-x");
+      wrapper.style.removeProperty("scroll-snap-type");
+      gsap.set(wrapper, { x: 0 });
+    }
+  }
+
+});
+
 
   const contactBtn = document.getElementById('contact-me-btn');
 
