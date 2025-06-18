@@ -321,3 +321,15 @@ body {
   letter-spacing: -0.02em;
   color: var(--text);
 }
+
+@media (max-width: 768px) {
+  .horizontal-scroll-wrapper {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+  .section {
+    height: auto;
+    min-height: 100vh;
+  }
+}
