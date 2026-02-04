@@ -2,6 +2,51 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // ————————————————————————————
+  // 0. PARTICLES BACKGROUND
+  // ————————————————————————————
+  function createParticles() {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.id = 'particles';
+    particlesContainer.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    `;
+    document.body.insertBefore(particlesContainer, document.body.firstChild);
+
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: absolute;
+        width: ${Math.random() * 3 + 1}px;
+        height: ${Math.random() * 3 + 1}px;
+        background: radial-gradient(circle, rgba(0, 245, 255, 0.8), rgba(255, 110, 199, 0.4));
+        border-radius: 50%;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        animation: float ${Math.random() * 10 + 10}s infinite ease-in-out;
+        box-shadow: 0 0 ${Math.random() * 10 + 5}px rgba(0, 245, 255, 0.5);
+      `;
+      particlesContainer.appendChild(particle);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(1.2); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  createParticles();
+  // ————————————————————————————
   // 1. THEME TOGGLE
   // ————————————————————————————
   const themeToggle = document.getElementById('theme-toggle');

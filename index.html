@@ -8,6 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🧠</text></svg>">
+  
+  <!-- Meta Tags -->
+  <meta name="description" content="Sunny Henry Gomes - AI & Data Science Specialist. Passionate about Machine Learning, Deep Learning, and turning data into impactful solutions." />
+  <meta name="keywords" content="AI, Data Science, Machine Learning, Deep Learning, Python, TensorFlow, Portfolio" />
+  <meta property="og:title" content="Sunny Henry Gomes | AI & Data Specialist" />
+  <meta property="og:description" content="AI & Data Science Specialist passionate about Machine Learning and Deep Learning" />
 </head>
 <body>
   <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
@@ -15,11 +24,36 @@
 
   <div class="horizontal-scroll-wrapper">
     <!-- Hero Section -->
-    <section class="section hero" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-      <h1 class="hero-title" style="text-align: center;">SUNNY HENRY GOMES</h1>
-      <p class="hero-subtitle" style="text-align: center; margin-top: 1rem;">AI, Data Science & Machine Learning Enthusiast | Turning Data into Impact</p>
-      <div class="scroll-hint">← Scroll →</div>
+    <section class="section hero" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+      <div style="position: relative; z-index: 2;">
+        <h1 class="hero-title" data-text="SUNNY HENRY GOMES" style="text-align: center;">SUNNY HENRY GOMES</h1>
+        <p class="hero-subtitle" style="text-align: center; margin-top: 1rem;">
+          <span style="display: inline-block; animation: fadeInUp 1s ease 0.5s both;">AI, Data Science & Machine Learning Enthusiast</span>
+          <br />
+          <span style="display: inline-block; animation: fadeInUp 1s ease 0.7s both; font-size: 1.2rem; margin-top: 0.5rem;">Turning Data into Impact 🚀</span>
+        </p>
+      </div>
+      <div class="scroll-hint" style="animation: fadeIn 1s ease 1.5s both;">← Scroll to explore →</div>
+      
+      <!-- Floating elements -->
+      <div style="position: absolute; top: 20%; left: 10%; width: 100px; height: 100px; background: radial-gradient(circle, rgba(0, 245, 255, 0.1), transparent); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+      <div style="position: absolute; bottom: 20%; right: 15%; width: 150px; height: 150px; background: radial-gradient(circle, rgba(255, 110, 199, 0.1), transparent); border-radius: 50%; animation: float 8s ease-in-out infinite reverse;"></div>
     </section>
+    
+    <style>
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+      }
+    </style>
 
     
     <!-- About Section -->
