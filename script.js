@@ -120,122 +120,62 @@ document.addEventListener('DOMContentLoaded', () => {
   // ————————————————————————————
   // 2. GSAP SCROLLTRIGGER FOR HORIZONTAL SCROLL
   // ————————————————————————————
-  gsap.registerPlugin(ScrollTrigger);
-
+  // Disabled in favor of native CSS scroll-snap for better performance
+  // Using CSS scroll-snap-type: x mandatory instead
+  
   const sections = gsap.utils.toArray('.section');
 
-  // animate horizontal scroll
-// After gsap.registerPlugin(ScrollTrigger);
-// And after you have const sections = gsap.utils.toArray('.section');
+  // Native scroll handling
+  const wrapper = document.querySelector('.horizontal-scroll-wrapper');
+  let isScrolling = false;
+  
+  wrapper.addEventListener('wheel', (e) => {
+    if (isScrolling) return;
+    
+    e.preventDefault();
+    isScrolling = true;
+    
+    const delta = e.deltaY || e.deltaX;
+    wrapper.scrollLeft += delta;
+    
+    setTimeout(() => {
+      isScrolling = false;
+    }, 50);
+  }, { passive: false });
 
-ScrollTrigger.matchMedia({
-
-  // Desktop & tablet (≥769px): horizontal scroll enabled
-  "(min-width: 769px)": function() {
-    gsap.to(sections, {
-      xPercent: -100 * (sections.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".horizontal-scroll-wrapper",
-        pin: true,
-        scrub: 0.5,
-        snap: {
-          snapTo: (progress) => {
-            // Snap to each section precisely
-            const numSections = sections.length;
-            const snapPoints = [];
-            for (let i = 0; i < numSections; i++) {
-              snapPoints.push(i / (numSections - 1));
-            }
-            // Find closest snap point
-            let closest = snapPoints[0];
-            let minDiff = Math.abs(progress - closest);
-            for (let i = 1; i < snapPoints.length; i++) {
-              const diff = Math.abs(progress - snapPoints[i]);
-              if (diff < minDiff) {
-                minDiff = diff;
-                closest = snapPoints[i];
-              }
-            }
-            return closest;
-          },
-          duration: { min: 0.2, max: 0.5 },
-          delay: 0.1,
-          ease: "power2.inOut"
-        },
-        end: () => "+=" + document.querySelector(".horizontal-scroll-wrapper").offsetWidth,
-      },
+  // Highlight active section on scroll
+  wrapper.addEventListener('scroll', () => {
+    const scrollLeft = wrapper.scrollLeft;
+    const sectionWidth = window.innerWidth;
+    const currentIndex = Math.round(scrollLeft / sectionWidth);
+    
+    sections.forEach((sec, idx) => {
+      if (idx === currentIndex) {
+        sec.classList.add('active');
+      } else {
+        sec.classList.remove('active');
+      }
     });
+  });
 
-    // highlight active section
-    sections.forEach((sec) => {
-      ScrollTrigger.create({
-        trigger: sec,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => sec.classList.add("active"),
-        onEnterBack: () => sec.classList.add("active"),
-        onLeave: () => sec.classList.remove("active"),
-        onLeaveBack: () => sec.classList.remove("active"),
+  // Contact button scroll to last section
+  const contactBtn = document.getElementById('contact-me-btn');
+  if (contactBtn) {
+    contactBtn.addEventListener('click', () => {
+      const wrapper = document.querySelector('.horizontal-scroll-wrapper');
+      wrapper.scrollTo({
+        left: wrapper.scrollWidth - wrapper.clientWidth,
+        behavior: 'smooth'
       });
     });
-  },
-
-  // Mobile (≤768px): disable horizontal pin, allow normal vertical scroll
-  "(max-width: 768px)": function() {
-    // Remove all ScrollTriggers (including pin)
-    ScrollTrigger.getAll().forEach(st => st.kill());
-
-    // Reset any inline styles set by GSAP
-    const wrapper = document.querySelector(".horizontal-scroll-wrapper");
-    if(wrapper){
-      wrapper.style.removeProperty("overflow-x");
-      wrapper.style.removeProperty("scroll-snap-type");
-      gsap.set(wrapper, { x: 0 });
-    }
   }
-
-});
-
-
-  const contactBtn = document.getElementById('contact-me-btn');
-
-if (contactBtn) {
-  contactBtn.addEventListener('click', () => {
-    // Get the horizontal scroll ScrollTrigger instance
-    const scrollTriggerInstance = ScrollTrigger.getAll().find(st => 
-      st.trigger.classList.contains('horizontal-scroll-wrapper')
-    );
-
-    if (scrollTriggerInstance) {
-      // ScrollTrigger scroll range goes from 0 to scrollTriggerInstance.end
-      // So scroll to the very end (last page)
-      scrollTriggerInstance.scroll(scrollTriggerInstance.end);
-    }
-  });
-}
-
-  // highlight active section
-  sections.forEach((sec) => {
-    ScrollTrigger.create({
-      trigger: sec,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter:    () => sec.classList.add('active'),
-      onEnterBack:() => sec.classList.add('active'),
-      onLeave:    () => sec.classList.remove('active'),
-      onLeaveBack:() => sec.classList.remove('active'),
-    });
-  });
 
   // fade in hero text
   gsap.from('.hero-title', {
-    y: 50, opacity: 0, duration: 1, delay: 0.5,
-    scrollTrigger: { trigger: '.hero', start: 'top center' }
+    y: 50, opacity: 0, duration: 1, delay: 0.5
   });
   gsap.from('.hero-subtitle', {
-    y: 30, opacity: 0, duration: 1, delay: 0.8,
-    scrollTrigger: { trigger: '.hero', start: 'top center' }
+    y: 30, opacity: 0, duration: 1, delay: 0.8
   });
 
   // ————————————————————————————
