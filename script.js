@@ -48,8 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
   createParticles();
 
   // ————————————————————————————
-  // 0.5. CUSTOM CURSOR
+  // 0.5. CUSTOM CURSOR (DISABLED FOR BETTER UX)
   // ————————————————————————————
+  // Custom cursor disabled to prevent scroll issues
+  /*
   const cursor = document.createElement('div');
   cursor.id = 'custom-cursor';
   document.body.appendChild(cursor);
@@ -88,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cursor.style.borderColor = '#00f5ff';
     });
   });
+  */
 
   // ————————————————————————————
   // 1. THEME TOGGLE
