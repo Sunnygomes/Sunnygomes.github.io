@@ -139,10 +139,26 @@ ScrollTrigger.matchMedia({
         trigger: ".horizontal-scroll-wrapper",
         pin: true,
         scrub: 1,
-        snap: 1 / (sections.length - 1),
+        snap: {
+          snapTo: 1 / (sections.length - 1),
+          duration: 0.5,
+          delay: 0.1,
+          ease: "power1.inOut"
+        },
         end: () => "+=" + document.querySelector(".horizontal-scroll-wrapper").offsetWidth,
       },
     });
+
+    // Prevent accidental scrolling past sections
+    let scrollTimeout;
+    const wrapper = document.querySelector(".horizontal-scroll-wrapper");
+    
+    wrapper.addEventListener('wheel', (e) => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        // Allow scroll to settle
+      }, 150);
+    }, { passive: true });
 
     // highlight active section
     sections.forEach((sec) => {

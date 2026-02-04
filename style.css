@@ -116,11 +116,14 @@ body::before {
   display: flex;
   width: 400vw;
   height: 100vh;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   overflow-x: auto;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
 }
 .section {
-  scroll-snap-align: start;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
   width: 100vw;
   height: 100vh;
   padding: var(--section-padding);
@@ -130,6 +133,8 @@ body::before {
   position: relative;
   transition: all 0.5s ease;
   backdrop-filter: blur(10px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .section::before {
