@@ -118,39 +118,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ————————————————————————————
-  // 2. GSAP SCROLLTRIGGER FOR HORIZONTAL SCROLL
+  // 2. VERTICAL SCROLL - SECTION ACTIVATION
   // ————————————————————————————
-  // Disabled in favor of native CSS scroll-snap for better performance
-  // Using CSS scroll-snap-type: x mandatory instead
-  
-  const sections = gsap.utils.toArray('.section');
-
-  // Native scroll handling
-  const wrapper = document.querySelector('.horizontal-scroll-wrapper');
-  let isScrolling = false;
-  
-  wrapper.addEventListener('wheel', (e) => {
-    if (isScrolling) return;
-    
-    e.preventDefault();
-    isScrolling = true;
-    
-    const delta = e.deltaY || e.deltaX;
-    wrapper.scrollLeft += delta;
-    
-    setTimeout(() => {
-      isScrolling = false;
-    }, 50);
-  }, { passive: false });
+  const sections = document.querySelectorAll('.section');
 
   // Highlight active section on scroll
-  wrapper.addEventListener('scroll', () => {
-    const scrollLeft = wrapper.scrollLeft;
-    const sectionWidth = window.innerWidth;
-    const currentIndex = Math.round(scrollLeft / sectionWidth);
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + window.innerHeight / 2;
     
-    sections.forEach((sec, idx) => {
-      if (idx === currentIndex) {
+    sections.forEach((sec) => {
+      const sectionTop = sec.offsetTop;
+      const sectionHeight = sec.offsetHeight;
+      
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
         sec.classList.add('active');
       } else {
         sec.classList.remove('active');
@@ -162,9 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactBtn = document.getElementById('contact-me-btn');
   if (contactBtn) {
     contactBtn.addEventListener('click', () => {
-      const wrapper = document.querySelector('.horizontal-scroll-wrapper');
-      wrapper.scrollTo({
-        left: wrapper.scrollWidth - wrapper.clientWidth,
+      document.querySelector('#contact').scrollIntoView({
         behavior: 'smooth'
       });
     });
