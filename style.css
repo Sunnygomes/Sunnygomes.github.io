@@ -30,7 +30,33 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: none;
 }
+
+/* Custom Cursor */
+#custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.1s ease;
+  mix-blend-mode: difference;
+}
+
+#custom-cursor-dot {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 10px var(--accent);
+}
+
 html {
   scroll-behavior: smooth;
 }

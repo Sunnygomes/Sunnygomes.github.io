@@ -46,6 +46,49 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(style);
   }
   createParticles();
+
+  // ————————————————————————————
+  // 0.5. CUSTOM CURSOR
+  // ————————————————————————————
+  const cursor = document.createElement('div');
+  cursor.id = 'custom-cursor';
+  document.body.appendChild(cursor);
+
+  const cursorDot = document.createElement('div');
+  cursorDot.id = 'custom-cursor-dot';
+  document.body.appendChild(cursorDot);
+
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+  });
+
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.1;
+    cursorY += (mouseY - cursorY) * 0.1;
+    cursor.style.left = cursorX - 10 + 'px';
+    cursor.style.top = cursorY - 10 + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Cursor hover effects
+  document.querySelectorAll('a, button, .btn, .project-card, .detail-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      cursor.style.borderColor = '#ff6ec7';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      cursor.style.borderColor = '#00f5ff';
+    });
+  });
+
   // ————————————————————————————
   // 1. THEME TOGGLE
   // ————————————————————————————
