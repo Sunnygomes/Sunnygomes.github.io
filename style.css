@@ -1,3 +1,4 @@
+/* Portfolio v2.0 - Vertical Scroll Fixed - Last Updated: Feb 4, 2026 */
 /* ————————————————————————————
    1. CSS Variables & Dark Mode
 ———————————————————————————— */
@@ -115,15 +116,22 @@ body::before {
 }
 
 .section {
-  width: 100%;\n  min-height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   padding: var(--section-padding);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
   z-index: 2;
   box-sizing: border-box;
+  padding-top: 6rem;
+}
+
+.section.hero {
+  justify-content: center;
+  padding-top: 0;
 }
 
 .section > * {
