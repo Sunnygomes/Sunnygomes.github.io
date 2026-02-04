@@ -2,8 +2,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // ————————————————————————————
-  // 0. PARTICLES BACKGROUND
+  // 0. PARTICLES BACKGROUND (DISABLED)
   // ————————————————————————————
+  // Particles disabled to prevent scroll interference
+  /*
   function createParticles() {
     const particlesContainer = document.createElement('div');
     particlesContainer.id = 'particles';
@@ -46,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(style);
   }
   createParticles();
+  */
 
   // ————————————————————————————
   // 0.5. CUSTOM CURSOR (DISABLED FOR BETTER UX)
