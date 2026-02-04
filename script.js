@@ -138,27 +138,34 @@ ScrollTrigger.matchMedia({
       scrollTrigger: {
         trigger: ".horizontal-scroll-wrapper",
         pin: true,
-        scrub: 1,
+        scrub: 0.5,
         snap: {
-          snapTo: 1 / (sections.length - 1),
-          duration: 0.5,
+          snapTo: (progress) => {
+            // Snap to each section precisely
+            const numSections = sections.length;
+            const snapPoints = [];
+            for (let i = 0; i < numSections; i++) {
+              snapPoints.push(i / (numSections - 1));
+            }
+            // Find closest snap point
+            let closest = snapPoints[0];
+            let minDiff = Math.abs(progress - closest);
+            for (let i = 1; i < snapPoints.length; i++) {
+              const diff = Math.abs(progress - snapPoints[i]);
+              if (diff < minDiff) {
+                minDiff = diff;
+                closest = snapPoints[i];
+              }
+            }
+            return closest;
+          },
+          duration: { min: 0.2, max: 0.5 },
           delay: 0.1,
-          ease: "power1.inOut"
+          ease: "power2.inOut"
         },
         end: () => "+=" + document.querySelector(".horizontal-scroll-wrapper").offsetWidth,
       },
     });
-
-    // Prevent accidental scrolling past sections
-    let scrollTimeout;
-    const wrapper = document.querySelector(".horizontal-scroll-wrapper");
-    
-    wrapper.addEventListener('wheel', (e) => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        // Allow scroll to settle
-      }, 150);
-    }, { passive: true });
 
     // highlight active section
     sections.forEach((sec) => {

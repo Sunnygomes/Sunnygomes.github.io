@@ -116,14 +116,13 @@ body::before {
   display: flex;
   width: 400vw;
   height: 100vh;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: none;
   overflow-x: auto;
   scroll-behavior: smooth;
   overscroll-behavior-x: contain;
 }
 .section {
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
+  scroll-snap-align: none;
   width: 100vw;
   height: 100vh;
   padding: var(--section-padding);
